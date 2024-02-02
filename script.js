@@ -73,29 +73,29 @@ class Character {
         this.inventory.push(...items)
     }
     addDamage(damagePoints) {
+        console.log(`${this.name} added damage: ${damagePoints}`)
         this.health -= damagePoints
     }
     duel(opponent) {
         while (this.health > 50 && opponent.health > 50) {
             let myMove = this.roll();
             let opponentMove = opponent.roll();
-            if (myMove > opponentMove) 
-            {   
+            if (myMove > opponentMove) {
                 opponent.defence(this.fight())
             }
             else if (myMove < opponentMove) this.defence(opponent.fight());
             console.log(`${this.name} threw ${myMove}. ${opponent.name} threw ${opponentMove}. 
             ${this.name} health: ${this.health}.
-            ${opponent.name} health: ${opponent.health}}`);
+            ${opponent.name} health: ${opponent.health}.`);
         }
-        console.log(`${this.health > opponent.health ? this.name : opponent.name} win!`)
+        console.log(`${this.health > opponent.health ? this.name : opponent.name } win!`)
     }
     //common behaviour in duel
-    fight(){
+    fight() {
         //health points that character take from opponent
         return 1;
     };
-    defence(damagePoints){
+    defence(damagePoints) {
         this.addDamage(damagePoints)
         //health points that character save by healing
     }
@@ -246,12 +246,83 @@ console.log(`
 
 //added duel method for characters
 
-const hermione = new Adventurer("Hermione", Adventurer.ROLES[2]);
-const crookshanks = new Companion("Crookshanks", Companion.TYPES[0]);
-hermione.addCompanions(crookshanks);
+const hermione_adv = new Adventurer("Hermione", Adventurer.ROLES[2]);
+const crookshanks_adv = new Companion("Crookshanks", Companion.TYPES[0]);
+hermione_adv.addCompanions(crookshanks_adv);
 
-const wanda = new Adventurer("Wanda Maximoff", Adventurer.ROLES[1]);
+const wanda_adv = new Adventurer("Wanda Maximoff", Adventurer.ROLES[1]);
 
-const halk = new Adventurer("Halk", Adventurer.ROLES[0]);
+const halk_adv = new Adventurer("Halk", Adventurer.ROLES[0]);
 
-hermione.duel(wanda);
+hermione_adv.duel(wanda_adv);
+
+class Healer extends Adventurer {
+    constructor(name) {
+        super(name, Adventurer.ROLES[1])
+    }
+
+    defence(damagePoints) {
+        console.log("defence " +damagePoints)
+        if (damagePoints % 2 === 0) {
+            this.addDamage(--damagePoints)
+        }
+        else {
+            this.addDamage((damagePoints + 1) / 2)
+        }
+    }
+    fight() {
+        return 5;
+    }
+}
+
+class Fighter extends Adventurer {
+    constructor(name) {
+        super(name, Adventurer.ROLES[0])
+    }
+
+    fight() {
+        return Math.floor(Math.random() * 10) + 5;
+    }
+}
+
+class Wizard extends Adventurer {
+    constructor(name) {
+        super(name, Adventurer.ROLES[2])
+    }
+
+    defence(damagePoints) {
+        let defencepoints = Math.floor(Math.random() * 10);
+        this.addDamage(damagePoints - defencepoints)
+        
+    }
+    fight() {
+        return Math.floor(Math.random() * 10) + 3 ;
+    }
+}
+
+/******************************************** */
+const hermione = new Wizard("Hermione Granger");
+const wanda = new Healer("Wanda Maximoff");
+const halk = new Fighter("HALK");
+console.log(`
+*********************************
+Healer vs Fighter           
+*********************************`)
+wanda.duel(halk)
+wanda.health = 100;
+halk.health = 100;
+
+console.log(`
+*********************************
+Healer vs Wizard           
+*********************************`)
+wanda.duel(hermione)
+
+wanda.health = 100;
+hermione.health =100;
+
+console.log(`
+*********************************
+Fighter vs Wizard           
+*********************************`)
+halk.duel(hermione)
