@@ -64,12 +64,28 @@ class Character {
     roll(mod = 0) {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
         console.log(`${this.name} rolled a ${result}.`)
+        return result;
     }
     addCompanions(...companion) {
         this.companions.push(...companion)
     }
     addToInventory(...items) {
         this.inventory.push(...items)
+    }
+    addDamage() {
+        --this.health
+    }
+    duel(opponent) {
+        while (this.health > 50 && opponent.health > 50) {
+            let myMove = this.roll();
+            let opponentMove = opponent.roll();
+            if (myMove > opponentMove) opponent.addDamage()
+            else if (myMove < opponentMove) this.addDamage();
+            console.log(`${this.name} threw ${myMove}. ${opponent.name} threw ${opponentMove}. 
+            ${this.name} health: ${this.health}.
+            ${opponent.name} health: ${opponent.health}}`);
+        }
+        console.log(`${this.health > opponent.health ? this.name : opponent.name} win!`)
     }
 }
 
@@ -206,3 +222,24 @@ const healers = new AdventurerFactory("Healer");
 const robin_factoryObject = healers.generate("Robin");
 console.log(healers)
 console.log(robin_factoryObject)
+
+/********************************************* 
+ * *******Part 6: Developing Skills***********
+**********************************************/
+console.log(`
+*************************************
+****************Part 6***************
+*************************************`
+);
+
+//added duel method for characters
+
+const hermione = new Adventurer("Hermione", Adventurer.ROLES[2]);
+const crookshanks = new Companion("Crookshanks", Companion.TYPES[0]);
+hermione.addCompanions(crookshanks);
+
+const wanda = new Adventurer("Wanda Maximoff", Adventurer.ROLES[1]);
+
+const halk = new Adventurer("Halk", Adventurer.ROLES[0]);
+
+hermione.duel(wanda);
