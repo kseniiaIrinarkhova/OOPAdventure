@@ -106,3 +106,12 @@ class Companion extends Character{
     }
 }
 
+const robin = new Adventurer("Robin","archer");
+robin.inventory.push("sword", "potion", "artifact");
+const leo = new Companion("Leo","Cat")
+robin.companions.push(leo);
+const frank = new Companion("Frank", "Flea")
+frank.inventory.push("small hat", "sunglasses");
+leo.companions.push(frank)
+
+console.log(robin)
