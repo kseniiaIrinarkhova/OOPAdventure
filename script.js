@@ -174,3 +174,35 @@ newFrank.addToInventory("small hat", "sunglasses");
 newLeo.addCompanions(newFrank);
 
 console.log(newRobin)
+
+/********************************************* 
+ * *******Part 5: Gather your Party***********
+**********************************************/
+console.log(`
+*************************************
+****************Part 5***************
+*************************************`
+);
+
+//factory class for roles
+class AdventurerFactory {
+    constructor(role) {
+        this.role = role;
+        this.adventurers = [];
+    }
+    generate(name) {
+        const newAdventurer = new Adventurer(name, this.role);
+        this.adventurers.push(newAdventurer);
+        return newAdventurer;
+    }
+    findByIndex(index) {
+        return this.adventurers[index];
+    }
+    findByName(name) {
+        return this.adventurers.find((a) => a.name === name);
+    }
+}
+const healers = new AdventurerFactory("Healer");
+const robin_factoryObject = healers.generate("Robin");
+console.log(healers)
+console.log(robin_factoryObject)
