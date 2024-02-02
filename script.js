@@ -62,5 +62,11 @@ robin.companion.type = "Cat";
 robin.companion.companion = new Character("Frank");
 robin.companion.companion.type = "Flea";
 robin.companion.companion.inventory = ["small hat", "sunglasses"];
-
+//check what we have
 console.log(robin)
+
+//check class method:
+robin.roll();
+robin.companion.roll();
+robin.companion.companion.roll();
+
