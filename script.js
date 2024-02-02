@@ -54,6 +54,12 @@ class Character {
         const result = Math.floor(Math.random() * 20) + 1 + mod;
         console.log(`${this.name} rolled a ${result}.`)
     }
+    addCompanions(...companion){
+        this.companions.push(...companion)
+    }
+    addToInventory(...items){
+        this.inventory.push(...items)
+    }
 }
 
 //recreate adventurer with classes:
@@ -107,11 +113,17 @@ class Companion extends Character{
 }
 
 const robin = new Adventurer("Robin","archer");
-robin.inventory.push("sword", "potion", "artifact");
+//robin.inventory.push("sword", "potion", "artifact");
+robin.addToInventory("sword", "potion", "artifact");
 const leo = new Companion("Leo","Cat")
-robin.companions.push(leo);
+//robin.companions.push(leo);
+robin.addCompanions(leo)
 const frank = new Companion("Frank", "Flea")
-frank.inventory.push("small hat", "sunglasses");
-leo.companions.push(frank)
+frank.addToInventory("small hat", "sunglasses");
+//frank.inventory.push("small hat", "sunglasses");
+//leo.companions.push(frank)
+leo.addCompanions(frank)
 
 console.log(robin)
+console.log(robin.companions)
+console.log(leo.companions)
