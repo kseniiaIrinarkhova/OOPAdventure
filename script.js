@@ -16,9 +16,22 @@ const adventurer = {
             type: "Flea",
             inventory: ["small hat","sunglasses"]
         }
+    },
+    //method for the object
+    roll(mod = 0) {
+        const result = Math.floor(Math.random() * 20) + 1 + mod;
+        console.log(`${this.name} rolled a ${result}.`)
     }
 }
 //log the 1st inventory object
 console.log(adventurer.inventory[0]);
 //show all inventory:
 adventurer.inventory.forEach((item) =>{console.log(`${adventurer.name} has ${item}`)});
+
+//show an object
+console.log(adventurer)
+
+//call object's method
+adventurer.roll();
+adventurer.roll();
+adventurer.roll();
