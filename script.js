@@ -72,20 +72,32 @@ class Character {
     addToInventory(...items) {
         this.inventory.push(...items)
     }
-    addDamage() {
-        --this.health
+    addDamage(damagePoints) {
+        this.health -= damagePoints
     }
     duel(opponent) {
         while (this.health > 50 && opponent.health > 50) {
             let myMove = this.roll();
             let opponentMove = opponent.roll();
-            if (myMove > opponentMove) opponent.addDamage()
-            else if (myMove < opponentMove) this.addDamage();
+            if (myMove > opponentMove) 
+            {   
+                opponent.defence(this.fight())
+            }
+            else if (myMove < opponentMove) this.defence(opponent.fight());
             console.log(`${this.name} threw ${myMove}. ${opponent.name} threw ${opponentMove}. 
             ${this.name} health: ${this.health}.
             ${opponent.name} health: ${opponent.health}}`);
         }
         console.log(`${this.health > opponent.health ? this.name : opponent.name} win!`)
+    }
+    //common behaviour in duel
+    fight(){
+        //health points that character take from opponent
+        return 1;
+    };
+    defence(damagePoints){
+        this.addDamage(damagePoints)
+        //health points that character save by healing
     }
 }
 
